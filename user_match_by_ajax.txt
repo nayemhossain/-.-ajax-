@@ -1,0 +1,34 @@
+$.ajax({
+      url:'pro_utilitycheck.php',
+      method:"POST",
+      data:{ProTypeCS:ProTypeCS},
+      success:function(data)
+      {
+       if(data != 0){
+        $('#availability').html('<span class="text-danger">Product Type not available</span>');
+        $('#register').attr("disabled", true);
+       }
+       else
+       {
+        $('#availability').html('<span class="text-success">Product Type Available</span>');
+        $('#register').attr("disabled", false);
+       }
+      }
+     })
+
+//URL OR ACTION FILE
+<?php
+
+if(isset($_POST["ProTypeCS"]))
+{
+ $ProTypeCS = mysqli_real_escape_string($con, $_POST["ProTypeCS"]);
+ $query = "SELECT * FROM `product_type` WHERE TypeName = '".$ProTypeCS."'";
+ $result = mysqli_query($con, $query);
+ echo mysqli_num_rows($result);
+ // if (mysqli_num_rows($result) >0 ){
+ // 	echo " Product Type Already Exist! Please try anather."
+ // }else{
+ // 	echo " Product Type is Avalable!"
+ // }
+}
+?>
